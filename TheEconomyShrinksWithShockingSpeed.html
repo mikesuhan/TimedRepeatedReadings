@@ -1,0 +1,445 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>Timed Reading</title>
+	<meta name="description" content="Timed Reading">
+	<meta name="author" content="Mike Suhan">
+
+	<style type="text/css">
+
+		body{
+			margin-top: 0;
+			margin-left: 0;
+			margin-right: 0;
+			margin-bottom: 100px;
+			padding: 0;
+			font-family: "Verdana";
+		}
+
+		div.timer_container{
+			text-align: center;
+			background-color: #ecfeec;
+			padding-top: 10px;
+			padding-bottom: 10px;
+		}
+
+		div.timer_title{
+			position: left;
+			font-size: 12pt;
+		}
+
+		div.timer{
+			font-size: 28pt;
+			padding: .5em;
+		}
+		div.timer_controls span{
+			font-weight: bold;
+			text-decoration: underline;
+			color: #D77D00;
+			font-size: 12pt;
+			padding-left: 1em;
+			padding-right: 1em;
+			
+		}
+		div.timer_controls span:hover{
+			cursor: pointer;
+
+		}
+
+		div.status_message{
+			bottom: 0;
+			position: fixed;
+			left: 0;
+			z-index: 1;
+			padding-top: 1em;
+			padding-bottom: 1em;
+			padding-left: 2%;
+			display: inline-block;
+			width: 100%;
+			background-color: #ecfeec;
+			border-top: solid black 2px;
+			font-weight: bold;
+			text-align: center;
+			font-size: 1.5em;
+
+		}
+
+		div.hidden{
+			visibility: hidden;
+			height: 0;
+		}
+
+		div.instructions{
+			font-size: 12pt;
+			margin: 2%;
+			}
+
+		p.content, p.footer {
+			width: 92%;
+			margin-left: 2%;
+
+		}
+
+		p.footer{
+			margin-top: 50px;
+		}
+
+		.hover:hover{
+			cursor: pointer;
+		}
+
+		span.count{
+			padding-left: 8px;
+			padding-right: 8px;
+			color: blue;
+			font-weight: bold;
+		}
+
+		div.final_message{
+			font-weight: bold;
+			padding: 2%;
+		}
+
+		div.additional_instructions{
+			padding: 2%;
+		}
+
+		td.final_counts_left{
+			text-align: right;
+			padding-right: .5em;
+		}
+		td.final_counts_right{
+			text-align: left;
+		}
+
+		div.final_counts table{
+			margin: 0 auto;
+			font-size: 12pt;
+		}
+
+		div.exit{
+			border: solid black 2px;
+			background-color: #ecfeec;
+			font-size: 2em;
+			padding: 1em;
+			color: #D77D00;
+			font-weight: bold;
+			text-decoration: underline;
+			margin: 0 auto;
+			width: fit-content;
+			margin-bottom: 2em;
+			margin-top: 2em;
+		}
+
+		div.exit:hover {
+			cursor: pointer;
+		}
+
+
+	</style>
+
+	<script>
+		//////////////////////////////////////////////////////// Content
+
+		var textContent = `
+		<b>The Economy Shrinks with Shocking Speed</b>
+
+		Three weeks ago, the car service company EmpireCLS was heading toward its second straight year of a growing business. Empire, based in New Jersey, could not find enough drivers and office workers to meet its needs.
+
+		Now, the company is on the edge of failure.
+
+		With extreme speed, business in the United States and around the world has collapsed in the face of the coronavirus. People are told to stay home. A car service like Empire is not needed.
+
+		The company has had a “90 percent revenue loss in three weeks,” said company chief David Seelinger. “We’ve been through 9/11. We’ve seen recessions. We’ve never seen anything like this.’’
+
+		Seelinger spent last Sunday telling 750 of his 900 employees they no longer had a job.
+
+		“It was the most difficult day of my career,” he said.
+
+		Never before has the American economy come to such a sudden, violent stop. The fall has shocked Americans who had enjoyed more than 10 years of a growing job market and economy. Now, the economy is headed toward a deep recession. Millions of people will likely lose jobs within a few months.
+
+		“The economy has never gone from healthy to disaster so quickly,” said Jason Furman. He was former President Barack Obama’s top economic adviser and is now a professor at Harvard’s Kennedy School.
+
+		“What would take years in a financial crisis has happened in days in this health crisis,’’ Furman said.
+
+		Since the Great Recession ended in 2009, the economy has risen for 11 years. Yearly growth has been at about 2.3 percent since 2010. Employers have added positions for workers for the last nine years.
+
+		Just two weeks ago, the government released a great employment report: A gain of 273,000 jobs in February. The country was experiencing a 50-year low in the rate of unemployment: 3.5 percent.
+
+		People were buying goods, eating out and spending money in other ways, too. Things were great.
+
+		But all that went away after just a few weeks of the spread of the new coronavirus in America.
+
+		The investment bank and financial services company Goldman Sachs says it expects the economy to shrink at a 24 percent yearly rate between April to June. Days earlier, the company had predicted a drop of just five percent during the same period.
+
+		The information services company IHS Markit predicts 7 million job losses from April to June. It expects unemployment will rise to 8.8 percent in the final three months of 2020. Some economists say it will go even higher.
+
+		As investors began to understand the seriousness of the crisis, they began to sell. Since February 12, the Dow Jones Industrial Average has fallen 35 percent. The market events have sharply reduced family wealth and consumer confidence.
+
+		“I’m not sure that anyone honestly has any sense of how this… resolves,” said Daniel Feldman. The former U.S. ambassador advises large international companies for a Washington, D.C.-based law firm.
+
+		Government officials are trying to help. The central bank has cut its main interest rate to almost zero. It is also trying to make certain that companies can use short-term credit so they can continue to pay employees. Congress and the White House are preparing a large stimulus program that includes giving money to citizens.
+
+		Economists do not usually recognize a recession until long after it has begun. Now, they can see it coming.
+
+		“Never…have I known the week a recession started,” said Diane Swonk, chief economist at the company Grant Thornton. She says the downturn began in the first week of March as the economy all but stopped.
+
+		For now, some Americans are working from home and keeping their jobs. Some of them may be saving money, which will help the economy later, explained Scott Hoyt, an economist at Moody’s Analytics.
+
+		Yet the future does not look promising. About 60 percent of American workers--82 million people--are paid by the hour. Most will not be paid if they cannot go to work.
+		`
+		
+		var footer = `
+
+		<iframe src="https://learningenglish.voanews.com/embed/player/0/5343537.html?type=audio" frameborder="0" scrolling="no" width="100%" height="144" allowfullscreen></iframe>
+
+		<i>This story was taken from <a href="https://learningenglish.voanews.com/a/the-economy-shrinks-with-shocking-speed/5343336.html">Voice of America Learning English</a>.
+
+		The Associated Press reported it. Susan Shand adapted it for Learning English. Caty Weaver was the editor.</i>
+		`
+
+		;
+
+		/////////////////////////////////////////////////////// OPTIONS
+
+		// The time limit for each reading
+		var defaultTime = 60;
+		// The number of times the user will be instructed to read the text
+		var readingN = 3;
+
+		///////////////////////////////////////////////////// INSTRUCTION PROMPTS
+		// Instructions displayed when users first enter he screen.
+		var firstInstructions = "<b>Instructions:</b> Read the text for 1 minute. Do this 3 times. Start from the beginning each time. Click the word that you stop on each time.";
+
+		// Message displayed when reading time is up
+		var timesUpMessage = "Time's up! Click on the last word that you read."
+		// Text to speech message said when time is up
+		var timesUpSSU = new SpeechSynthesisUtterance("Time's up! Click on the last word that you red.");
+		// Message displayed after point user read to is marked
+		var readAgainMessage = "Now read the text again from the beginning. Click on start when you're ready.";
+		// Text to speech message said after point user read to is marked
+		var readAgainSSU = new SpeechSynthesisUtterance(readAgainMessage);
+		// Message displayed above reading times when task is complete
+		var finishMessage = "Good job! Now read the entire text with no time limit."
+		// Text to speech message said when task is complete
+		var finishSSU = new SpeechSynthesisUtterance(finishMessage);
+		// Message shown at the end that will be displayd under the table of word counts
+		var additionalInstructions = "";
+		// Exit html element
+		var exitButton = 'Exit';
+		
+		// Function called when the "Exit" button is pressed at the end.
+		function exit(){
+			window.close();
+		}
+
+
+		var readingCount = 1;
+		var started = false;
+		var clickOnWord = false;
+		var wordCounts = [];
+		var timerInterval;
+		var status;
+
+		window.onload = function(){
+			window.resizeTo(screen.width * .9, screen.height *.9);
+			resetTimer();
+			setTitle();
+			document.querySelector('#instructions').innerHTML = firstInstructions;
+
+			textContent = textContent.trim().split("\n");
+
+			var wordCount = 1
+
+			textContent.forEach(function(paragraph, i){ 
+				paragraph = paragraph.trim();
+				if(paragraph){
+					let pTokens = paragraph.split(" ");
+					pTokens.forEach(function(token, k){
+						wordCount++;
+						pTokens[k] = "<span onclick=\"addCount(this)\" n=\"" + wordCount + "\">" + token + "</span>";
+					})
+					pTokens = pTokens.join(" ");
+					pTokens = '<p class="content">' + pTokens + '</p>';
+					document.querySelector('#text').innerHTML += pTokens;
+					console.log(i);
+				}
+			});
+
+			if(footer){
+				footer = footer.trim()
+				footer = footer.replace(/\n/g, "</br>");
+				footer = '<p class="footer">' + footer + "</p>";
+				document.querySelector('#text').innerHTML += footer;
+			}
+
+		}
+
+		function updateTimerTitle(){
+			document.querySelector()
+		}
+
+		function setTitle(){
+			document.querySelector('#timer_title').textContent = ordinal(readingCount) + " Time";
+		}
+
+		function addCount(element){
+			window.speechSynthesis.cancel();
+			if(clickOnWord){
+				element.innerHTML += '<span class="count">' + readingCount + '</span>';
+				readingCount++;
+				document.querySelector('#text').classList.remove('hover');
+				clickOnWord = false;
+				wordCounts.push(element.getAttribute("n"));
+
+				window.scrollTo(0, 0);
+
+				if(readingN >= readingCount){
+					resetTimer();
+					updateStatus(readAgainMessage, readAgainSSU);
+					setTitle();
+				}
+				else {
+					updateStatus(finishMessage, finishSSU);
+					document.querySelector('#status_message').remove();
+					let finalMessage = '<div class="final_message">' + finishMessage + '</div>';
+
+					//finalMessage += '<div class="final_counts"><table>';
+					finalMessage += '<div class="final_counts">';
+					wordCounts.forEach(function(wc, i){
+						finalMessage += '<div>' + ordinal(i + 1) + ' Time: ' + wc + ' Words</div>';
+						//finalMessage += '<tr><td class="final_counts_left">' + ordinal(i + 1) + " Time: </td>";
+						//finalMessage += '<td class="final_counts_right">' + wc + " Words</td></tr>";
+					});
+
+					//finalMessage += "</table></div>";
+					finalMessage += '</div>';
+
+					finalMessage += '<div class="additional_instructions">' + additionalInstructions + '</div>';
+					
+					let ex = document.querySelector('#exit')
+					ex.innerHTML = exitButton;
+					ex.classList.remove('hidden');
+					ex.classList.add('exit');
+
+					document.querySelector(".timer_container").innerHTML = finalMessage;
+
+				}
+			}
+		}
+
+		function updateStatus(msg, speechMsg){
+			let sm = document.querySelector('#status_message');
+			sm.classList.remove('hidden');
+
+			if(msg)			sm.innerHTML = msg;
+			if(speechMsg)	window.speechSynthesis.speak(speechMsg);
+			
+		}
+
+
+		function promptClick(){
+			clickOnWord = true;
+			updateStatus(timesUpMessage, timesUpSSU);
+            document.querySelector('#text').classList.add('hover');
+		}
+
+		function resetTimer(){
+            started = false;
+            clearInterval(timerInterval);
+            clickOnWord = false;
+            document.querySelector('#text').classList.remove('hover');
+
+
+			var timer = defaultTime, minutes, seconds;
+			var display = document.querySelector('#time');
+			minutes = parseInt(timer / 60, 10);
+	        seconds = parseInt(timer % 60, 10);
+
+	        minutes = minutes < 10 ? "0" + minutes : minutes;
+	        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+	        display.textContent = minutes + ":" + seconds;
+		}
+
+
+
+		function startTimer(duration, display) {
+			window.speechSynthesis.cancel();
+			document.querySelector('#status_message').classList.add('hidden')
+		    var timer = duration, minutes, seconds;
+		    timerInterval = setInterval(function () {
+		        minutes = parseInt(timer / 60, 10);
+		        seconds = parseInt(timer % 60, 10);
+
+		        minutes = minutes < 10 ? "0" + minutes : minutes;
+		        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+		        display.textContent = minutes + ":" + seconds;
+
+		        if (--timer < 0) {
+		            // timer = duration;
+		            // resetTimer();
+                    clearInterval(timerInterval);
+		            promptClick();
+
+		        }
+		    }, 1000);
+		}
+
+		function doCountDown() {
+			if (! started){
+				started = true;
+			    var display = document.querySelector('#time');
+			    startTimer(defaultTime, display);
+			}
+		};
+
+		function ordinal(i) {
+		    var j = i % 10,
+		        k = i % 100;
+		    if (j == 1 && k != 11) {
+		        return i + "st";
+		    }
+		    if (j == 2 && k != 12) {
+		        return i + "nd";
+		    }
+		    if (j == 3 && k != 13) {
+		        return i + "rd";
+		    }
+		    return i + "th";
+		}
+
+	</script>
+
+</head>
+
+<body>
+
+
+	<div class="hidden fixed status_message" id="status_message"></div>
+	<div class="instructions" id="instructions"></div>
+
+	<div class="timer_container">
+
+
+		<div id="timer_title" class="timer_title"></div>
+		<div class="timer"><span id="time"></span></div>
+		<div class="timer_controls">
+			<span class="start_timer" onclick="doCountDown()">Start</span>
+			<span class="reset_timer" onclick="resetTimer()">Reset</span>
+		</div>
+
+	</div>
+
+
+	<div class="text" id="text"></div>
+	<div class="hidden" id="exit" onclick="exit()"></div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,425 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>Timed Reading</title>
+	<meta name="description" content="Timed Reading">
+	<meta name="author" content="Mike Suhan">
+
+	<style type="text/css">
+
+		body{
+			margin-top: 0;
+			margin-left: 0;
+			margin-right: 0;
+			margin-bottom: 100px;
+			padding: 0;
+			font-family: "Verdana";
+		}
+
+		div.timer_container{
+			text-align: center;
+			background-color: #ecfeec;
+			padding-top: 10px;
+			padding-bottom: 10px;
+		}
+
+		div.timer_title{
+			position: left;
+			font-size: 12pt;
+		}
+
+		div.timer{
+			font-size: 28pt;
+			padding: .5em;
+		}
+		div.timer_controls span{
+			font-weight: bold;
+			text-decoration: underline;
+			color: #D77D00;
+			font-size: 12pt;
+			padding-left: 1em;
+			padding-right: 1em;
+			
+		}
+		div.timer_controls span:hover{
+			cursor: pointer;
+
+		}
+
+		div.status_message{
+			bottom: 0;
+			position: fixed;
+			left: 0;
+			z-index: 1;
+			padding-top: 1em;
+			padding-bottom: 1em;
+			padding-left: 2%;
+			display: inline-block;
+			width: 100%;
+			background-color: #ecfeec;
+			border-top: solid black 2px;
+			font-weight: bold;
+			text-align: center;
+			font-size: 1.5em;
+
+		}
+
+		div.hidden{
+			visibility: hidden;
+			height: 0;
+		}
+
+		div.instructions{
+			font-size: 12pt;
+			margin: 2%;
+			}
+
+		p.content, p.footer {
+			width: 92%;
+			margin-left: 2%;
+
+		}
+
+		p.footer{
+			margin-top: 50px;
+		}
+
+		.hover:hover{
+			cursor: pointer;
+		}
+
+		span.count{
+			padding-left: 8px;
+			padding-right: 8px;
+			color: blue;
+			font-weight: bold;
+		}
+
+		div.final_message{
+			font-weight: bold;
+			padding: 2%;
+		}
+
+		div.additional_instructions{
+			padding: 2%;
+		}
+
+		td.final_counts_left{
+			text-align: right;
+			padding-right: .5em;
+		}
+		td.final_counts_right{
+			text-align: left;
+		}
+
+		div.final_counts table{
+			margin: 0 auto;
+			font-size: 12pt;
+		}
+
+		div.exit{
+			border: solid black 2px;
+			background-color: #ecfeec;
+			font-size: 2em;
+			padding: 1em;
+			color: #D77D00;
+			font-weight: bold;
+			text-decoration: underline;
+			margin: 0 auto;
+			width: fit-content;
+			margin-bottom: 2em;
+			margin-top: 2em;
+		}
+
+		div.exit:hover {
+			cursor: pointer;
+		}
+
+
+	</style>
+
+	<script>
+		//////////////////////////////////////////////////////// Content
+
+		var textContent = `
+		<b>Play for Millenials? Board Games</b>
+
+		Toy industry experts say some people in the United States are turning off their electronic devices to play with classic toys like board games. This is especially true among the so-called millennial generation. People of this generation were born in the 1980s and 1990s. One coffee shop in Los Angeles is making profitable use of the increase in popularity of board games.
+
+GameHäus Café opened in November of 2013. The café is dedicated to board games. It has more than 750 games available for its customers. The business does not feature wireless Internet connection.
+
+Many customers like Roxanne Lee and her husband Agassi Lai think that is good. Ms. Lee praises the atmosphere of the café.
+
+“I think it’s very interesting for spending quality time together so that’s why I like it.”
+
+Agassi Lai used to like playing video games. But everything changed when he discovered board games a few years ago. Agassi Lai likes to play a board game called “Escape the Curse of the Temple.”
+
+“You keep rolling the dice and try to move to different places and try to escape the temple.”
+
+Mr. Lai and almost all the customers playing board games at the café are millennials. Market research company Euromonitor International says the new interest by millennials in the games is expected to increase U.S. sales. But sales of video games are expected to grow more.
+
+Twenty-three-year-old Weland Bourne is one of those board-game-loving millennials.
+
+“I think more with my generation, they’re wanting to take time. They’re wanting to take it slowly and I think, too, video games have kind of lost their glamour.”
+
+Millennials are not playing the classic American games they know and love. They are choosing new games from Europe. Terry Chiu is an owner of GameHäus Café. He says many “Euro games” have become popular around the world. He believes this is because the games are not based in language. Instead, they use symbols and have simple rules.
+
+“Because of the rise of European games, or Euro games, or German games as they might also be known, in the last 15 to 20 years, it’s actually become sort of universal. There are certain titles that have really crossed a lot of cultures to really capture the imaginations of different people.”
+
+Many millennials, including Kristie Nehme, say there is one thing a board game can offer that a video game cannot provide.
+
+“The more personal aspect of just being with friends and seeing each other in person and that’s probably the main difference, the main appeal.”
+
+Adrienne Appell is with the Toy Industry Association. She says the new generation just wants to put down the telephone and Tablet and connect directly with other people.
+		`
+		
+		var footer = `
+
+		<iframe src="https://learningenglish.voanews.com/embed/player/0/2368420.html?type=audio" frameborder="0" scrolling="no" width="100%" height="144" allowfullscreen></iframe>
+		`
+
+		;
+
+		/////////////////////////////////////////////////////// OPTIONS
+
+		// The time limit for each reading
+		var defaultTime = 60;
+		// The number of times the user will be instructed to read the text
+		var readingN = 3;
+
+		///////////////////////////////////////////////////// INSTRUCTION PROMPTS
+		// Instructions displayed when users first enter he screen.
+		var firstInstructions = "<b>Instructions:</b> Read the text for 1 minute. Do this 3 times. Start from the beginning each time. Click the word that you stop on each time.";
+
+		// Message displayed when reading time is up
+		var timesUpMessage = "Time's up! Click on the last word that you read."
+		// Text to speech message said when time is up
+		var timesUpSSU = new SpeechSynthesisUtterance("Time's up! Click on the last word that you red.");
+		// Message displayed after point user read to is marked
+		var readAgainMessage = "Now read the text again from the beginning. Click on start when you're ready.";
+		// Text to speech message said after point user read to is marked
+		var readAgainSSU = new SpeechSynthesisUtterance(readAgainMessage);
+		// Message displayed above reading times when task is complete
+		var finishMessage = "Good job! Now read the entire text with no time limit."
+		// Text to speech message said when task is complete
+		var finishSSU = new SpeechSynthesisUtterance(finishMessage);
+		// Message shown at the end that will be displayd under the table of word counts
+		var additionalInstructions = "";
+		// Exit html element
+		var exitButton = 'Exit';
+		
+		// Function called when the "Exit" button is pressed at the end.
+		function exit(){
+			window.close();
+		}
+
+
+		var readingCount = 1;
+		var started = false;
+		var clickOnWord = false;
+		var wordCounts = [];
+		var timerInterval;
+		var status;
+
+		window.onload = function(){
+			window.resizeTo(screen.width * .9, screen.height *.9);
+			resetTimer();
+			setTitle();
+			document.querySelector('#instructions').innerHTML = firstInstructions;
+
+			textContent = textContent.trim().split("\n");
+
+			var wordCount = 1
+
+			textContent.forEach(function(paragraph, i){ 
+				paragraph = paragraph.trim();
+				if(paragraph){
+					let pTokens = paragraph.split(" ");
+					pTokens.forEach(function(token, k){
+						wordCount++;
+						pTokens[k] = "<span onclick=\"addCount(this)\" n=\"" + wordCount + "\">" + token + "</span>";
+					})
+					pTokens = pTokens.join(" ");
+					pTokens = '<p class="content">' + pTokens + '</p>';
+					document.querySelector('#text').innerHTML += pTokens;
+					console.log(i);
+				}
+			});
+
+			if(footer){
+				footer = footer.trim()
+				footer = footer.replace(/\n/g, "</br>");
+				footer = '<p class="footer">' + footer + "</p>";
+				document.querySelector('#text').innerHTML += footer;
+			}
+
+		}
+
+		function updateTimerTitle(){
+			document.querySelector()
+		}
+
+		function setTitle(){
+			document.querySelector('#timer_title').textContent = ordinal(readingCount) + " Time";
+		}
+
+		function addCount(element){
+			window.speechSynthesis.cancel();
+			if(clickOnWord){
+				element.innerHTML += '<span class="count">' + readingCount + '</span>';
+				readingCount++;
+				document.querySelector('#text').classList.remove('hover');
+				clickOnWord = false;
+				wordCounts.push(element.getAttribute("n"));
+
+				window.scrollTo(0, 0);
+
+				if(readingN >= readingCount){
+					resetTimer();
+					updateStatus(readAgainMessage, readAgainSSU);
+					setTitle();
+				}
+				else {
+					updateStatus(finishMessage, finishSSU);
+					document.querySelector('#status_message').remove();
+					let finalMessage = '<div class="final_message">' + finishMessage + '</div>';
+
+					//finalMessage += '<div class="final_counts"><table>';
+					finalMessage += '<div class="final_counts">';
+					wordCounts.forEach(function(wc, i){
+						finalMessage += '<div>' + ordinal(i + 1) + ' Time: ' + wc + ' Words</div>';
+						//finalMessage += '<tr><td class="final_counts_left">' + ordinal(i + 1) + " Time: </td>";
+						//finalMessage += '<td class="final_counts_right">' + wc + " Words</td></tr>";
+					});
+
+					//finalMessage += "</table></div>";
+					finalMessage += '</div>';
+
+					finalMessage += '<div class="additional_instructions">' + additionalInstructions + '</div>';
+					
+					let ex = document.querySelector('#exit')
+					ex.innerHTML = exitButton;
+					ex.classList.remove('hidden');
+					ex.classList.add('exit');
+
+					document.querySelector(".timer_container").innerHTML = finalMessage;
+
+				}
+			}
+		}
+
+		function updateStatus(msg, speechMsg){
+			let sm = document.querySelector('#status_message');
+			sm.classList.remove('hidden');
+
+			if(msg)			sm.innerHTML = msg;
+			if(speechMsg)	window.speechSynthesis.speak(speechMsg);
+			
+		}
+
+
+		function promptClick(){
+			clickOnWord = true;
+			updateStatus(timesUpMessage, timesUpSSU);
+            document.querySelector('#text').classList.add('hover');
+		}
+
+		function resetTimer(){
+            started = false;
+            clearInterval(timerInterval);
+            clickOnWord = false;
+            document.querySelector('#text').classList.remove('hover');
+
+
+			var timer = defaultTime, minutes, seconds;
+			var display = document.querySelector('#time');
+			minutes = parseInt(timer / 60, 10);
+	        seconds = parseInt(timer % 60, 10);
+
+	        minutes = minutes < 10 ? "0" + minutes : minutes;
+	        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+	        display.textContent = minutes + ":" + seconds;
+		}
+
+
+
+		function startTimer(duration, display) {
+			window.speechSynthesis.cancel();
+			document.querySelector('#status_message').classList.add('hidden')
+		    var timer = duration, minutes, seconds;
+		    timerInterval = setInterval(function () {
+		        minutes = parseInt(timer / 60, 10);
+		        seconds = parseInt(timer % 60, 10);
+
+		        minutes = minutes < 10 ? "0" + minutes : minutes;
+		        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+		        display.textContent = minutes + ":" + seconds;
+
+		        if (--timer < 0) {
+		            // timer = duration;
+		            // resetTimer();
+                    clearInterval(timerInterval);
+		            promptClick();
+
+		        }
+		    }, 1000);
+		}
+
+		function doCountDown() {
+			if (! started){
+				started = true;
+			    var display = document.querySelector('#time');
+			    startTimer(defaultTime, display);
+			}
+		};
+
+		function ordinal(i) {
+		    var j = i % 10,
+		        k = i % 100;
+		    if (j == 1 && k != 11) {
+		        return i + "st";
+		    }
+		    if (j == 2 && k != 12) {
+		        return i + "nd";
+		    }
+		    if (j == 3 && k != 13) {
+		        return i + "rd";
+		    }
+		    return i + "th";
+		}
+
+	</script>
+
+</head>
+
+<body>
+
+
+	<div class="hidden fixed status_message" id="status_message"></div>
+	<div class="instructions" id="instructions"></div>
+
+	<div class="timer_container">
+
+
+		<div id="timer_title" class="timer_title"></div>
+		<div class="timer"><span id="time"></span></div>
+		<div class="timer_controls">
+			<span class="start_timer" onclick="doCountDown()">Start</span>
+			<span class="reset_timer" onclick="resetTimer()">Reset</span>
+		</div>
+
+	</div>
+
+
+	<div class="text" id="text"></div>
+	<div class="hidden" id="exit" onclick="exit()"></div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>Timed Reading</title>
+	<meta name="description" content="Timed Reading">
+	<meta name="author" content="Mike Suhan">
+
+	<style type="text/css">
+
+		body{
+			margin-top: 0;
+			margin-left: 0;
+			margin-right: 0;
+			margin-bottom: 100px;
+			padding: 0;
+			font-family: "Verdana";
+		}
+
+		div.timer_container{
+			text-align: center;
+			background-color: #ecfeec;
+			padding-top: 10px;
+			padding-bottom: 10px;
+		}
+
+		div.timer_title{
+			position: left;
+			font-size: 12pt;
+		}
+
+		div.timer{
+			font-size: 28pt;
+			padding: .5em;
+		}
+		div.timer_controls span{
+			font-weight: bold;
+			text-decoration: underline;
+			color: #D77D00;
+			font-size: 12pt;
+			padding-left: 1em;
+			padding-right: 1em;
+			
+		}
+		div.timer_controls span:hover{
+			cursor: pointer;
+
+		}
+
+		div.status_message{
+			bottom: 0;
+			position: fixed;
+			left: 0;
+			z-index: 1;
+			padding-top: 1em;
+			padding-bottom: 1em;
+			padding-left: 2%;
+			display: inline-block;
+			width: 100%;
+			background-color: #ecfeec;
+			border-top: solid black 2px;
+			font-weight: bold;
+			text-align: center;
+			font-size: 1.5em;
+
+		}
+
+		div.hidden{
+			visibility: hidden;
+			height: 0;
+		}
+
+		div.instructions{
+			font-size: 12pt;
+			margin: 2%;
+			}
+
+		p.content, p.footer {
+			width: 92%;
+			margin-left: 2%;
+
+		}
+
+		p.footer{
+			margin-top: 50px;
+		}
+
+		.hover:hover{
+			cursor: pointer;
+		}
+
+		span.count{
+			padding-left: 8px;
+			padding-right: 8px;
+			color: blue;
+			font-weight: bold;
+		}
+
+		div.final_message{
+			font-weight: bold;
+			padding: 2%;
+		}
+
+		div.additional_instructions{
+			padding: 2%;
+		}
+
+		td.final_counts_left{
+			text-align: right;
+			padding-right: .5em;
+		}
+		td.final_counts_right{
+			text-align: left;
+		}
+
+		div.final_counts table{
+			margin: 0 auto;
+			font-size: 12pt;
+		}
+
+		div.exit{
+			border: solid black 2px;
+			background-color: #ecfeec;
+			font-size: 2em;
+			padding: 1em;
+			color: #D77D00;
+			font-weight: bold;
+			text-decoration: underline;
+			margin: 0 auto;
+			width: fit-content;
+			margin-bottom: 2em;
+			margin-top: 2em;
+		}
+
+		div.exit:hover {
+			cursor: pointer;
+		}
+
+
+	</style>
+
+	<script>
+		//////////////////////////////////////////////////////// Content
+
+		var textContent = `
+	<b>Plants, Animals Affected as Alaska Records Hottest Month</b>
+
+United States government scientists say July 2019 was the hottest month on record worldwide.
+
+The average temperature in July was almost one degree Celsius higher than the 20th century average of 15.78 degrees. That made it the hottest July on our planet over the past 140 years, according to the U.S. National Oceanic and Atmospheric Administration, or NOAA.
+
+July 2019 also was the hottest month on record in the northwestern state of Alaska. Sea ice melted. Bering Sea fish swam in above-normal temperatures. So did children in the city of Nome, Alaska.
+
+The state’s wildfire season started early and stayed late. Walruses and other sea creatures appeared in large numbers along the coast.
+
+Alaska’s average temperature in July was 14.5 degrees Celsius. That is 3 degrees above average, NOAA reported.
+
+Unusual weather events like this could become more common with climate warming, notes climate researcher Brian Brettschneider. He works for the International Arctic Research Center at the University of Alaska Fairbanks.
+
+Brettschneider says the state has had “multiple decades-long increases” in temperature. “It becomes easier to have these unusual sets of conditions that now lead to records,” he added.
+
+The effects have been felt from the Arctic Ocean to the world’s largest temperate rainforest on the Alaskan Panhandle.
+
+<b>Effects of sea ice</b>
+
+Sea ice off of Alaska’s north and northwest coast and other Arctic areas shrank to the lowest level ever recorded for July. That information comes from the National Snow and Ice Data Center at the University of Colorado.
+
+Arctic sea ice for July set a record low of 7.6 million square kilometers. That represents a loss of 80,000 square kilometers -- or about the size of South Carolina -- below the old record low, set in July of 2012.
+
+Sea ice is the home for polar bears and a place for female walruses and their young to rest. Several thousand walruses arrived along the coastline on July 30. That reportedly is the first time they have been observed in such large numbers before August.
+
+Alaska’s wildfire season started in April. July’s dry and hot temperatures extended it. An expected rainy season marked by southwest winds pushing up rainfall did not show up on time, says Tim Mowry of the state Division of Forestry.
+
+“It extended our fire season through the month of July,” Mowry said.
+
+Restrictions on outdoor burning and water sprinkler use remain in place for the town of Haines, near the Tongass National Forest. July extended drought conditions in the rainforest, according to the International Arctic Research Center.
+
+But the warmer weather has helped Alaska’s farmers. Barley and other crops are ready to harvest, notes Stephen Brown of the University of Alaska Fairbanks Cooperative Extension Service.
+
+<b>The good and the bad</b>
+
+The growing season has been extended by a month, and if extra days become usual, they will expand what can be grown in the state. Brown used heat from his driveway to grow fruit not usually grown in the state.
+
+“I’ve got a bumper crop of tomatoes and jalapenos this summer,” he said.
+
+On the other hand, the weather has not helped Alaska’s birch trees and made them targets of leaf-eating insects.
+
+Brettschneider, the climate researcher, sees mostly negative effects from the hot July and climate warming. Alaska looks the way it does because of its temperatures, he said, and in 50 years, Alaska may look like Idaho.
+
+“We should expect changes. We should expect the forests to be in different locations. We should expect wildlife to move. We should expect plants to move. And in many cases, if they can’t move fast enough, we should expect them to just go away,” he said.
+
+		`
+		
+		var footer = `
+
+
+		The Associated Press reported this story. George Grow adapted it for VOA Learning English. Mario Ritter Jr. was the editor.
+		<br><br>
+		
+		<iframe src="https://learningenglish.voanews.com/embed/player/0/5048437.html?type=audio" frameborder="0" scrolling="no" width="100%" height="144" allowfullscreen></iframe>
+		`
+
+		;
+
+		/////////////////////////////////////////////////////// OPTIONS
+
+		// The time limit for each reading
+		var defaultTime = 60;
+		// The number of times the user will be instructed to read the text
+		var readingN = 3;
+
+		///////////////////////////////////////////////////// INSTRUCTION PROMPTS
+		// Instructions displayed when users first enter he screen.
+		var firstInstructions = "<b>Instructions:</b> Read the text for 1 minute. Do this 3 times. Start from the beginning each time. Click the word that you stop on each time.";
+
+		// Message displayed when reading time is up
+		var timesUpMessage = "Time's up! Click on the last word that you read."
+		// Text to speech message said when time is up
+		var timesUpSSU = new SpeechSynthesisUtterance("Time's up! Click on the last word that you red.");
+		// Message displayed after point user read to is marked
+		var readAgainMessage = "Now read the text again from the beginning. Click on start when you're ready.";
+		// Text to speech message said after point user read to is marked
+		var readAgainSSU = new SpeechSynthesisUtterance(readAgainMessage);
+		// Message displayed above reading times when task is complete
+		var finishMessage = "Good job! Now read the entire text with no time limit."
+		// Text to speech message said when task is complete
+		var finishSSU = new SpeechSynthesisUtterance(finishMessage);
+		// Message shown at the end that will be displayd under the table of word counts
+		var additionalInstructions = "";
+		// Exit html element
+		var exitButton = 'Exit';
+		
+		// Function called when the "Exit" button is pressed at the end.
+		function exit(){
+			window.close();
+		}
+
+
+		var readingCount = 1;
+		var started = false;
+		var clickOnWord = false;
+		var wordCounts = [];
+		var timerInterval;
+		var status;
+
+		window.onload = function(){
+			window.resizeTo(screen.width * .9, screen.height *.9);
+			resetTimer();
+			setTitle();
+			document.querySelector('#instructions').innerHTML = firstInstructions;
+
+			textContent = textContent.trim().split("\n");
+
+			var wordCount = 1
+
+			textContent.forEach(function(paragraph, i){ 
+				paragraph = paragraph.trim();
+				if(paragraph){
+					let pTokens = paragraph.split(" ");
+					pTokens.forEach(function(token, k){
+						wordCount++;
+						pTokens[k] = "<span onclick=\"addCount(this)\" n=\"" + wordCount + "\">" + token + "</span>";
+					})
+					pTokens = pTokens.join(" ");
+					pTokens = '<p class="content">' + pTokens + '</p>';
+					document.querySelector('#text').innerHTML += pTokens;
+					console.log(i);
+				}
+			});
+
+			if(footer){
+				footer = footer.trim()
+				footer = footer.replace(/\n/g, "</br>");
+				footer = '<p class="footer">' + footer + "</p>";
+				document.querySelector('#text').innerHTML += footer;
+			}
+
+		}
+
+		function updateTimerTitle(){
+			document.querySelector()
+		}
+
+		function setTitle(){
+			document.querySelector('#timer_title').textContent = ordinal(readingCount) + " Time";
+		}
+
+		function addCount(element){
+			window.speechSynthesis.cancel();
+			if(clickOnWord){
+				element.innerHTML += '<span class="count">' + readingCount + '</span>';
+				readingCount++;
+				document.querySelector('#text').classList.remove('hover');
+				clickOnWord = false;
+				wordCounts.push(element.getAttribute("n"));
+
+				window.scrollTo(0, 0);
+
+				if(readingN >= readingCount){
+					resetTimer();
+					updateStatus(readAgainMessage, readAgainSSU);
+					setTitle();
+				}
+				else {
+					updateStatus(finishMessage, finishSSU);
+					document.querySelector('#status_message').remove();
+					let finalMessage = '<div class="final_message">' + finishMessage + '</div>';
+
+					//finalMessage += '<div class="final_counts"><table>';
+					finalMessage += '<div class="final_counts">';
+					wordCounts.forEach(function(wc, i){
+						finalMessage += '<div>' + ordinal(i + 1) + ' Time: ' + wc + ' Words</div>';
+						//finalMessage += '<tr><td class="final_counts_left">' + ordinal(i + 1) + " Time: </td>";
+						//finalMessage += '<td class="final_counts_right">' + wc + " Words</td></tr>";
+					});
+
+					//finalMessage += "</table></div>";
+					finalMessage += '</div>';
+
+					finalMessage += '<div class="additional_instructions">' + additionalInstructions + '</div>';
+					
+					let ex = document.querySelector('#exit')
+					ex.innerHTML = exitButton;
+					ex.classList.remove('hidden');
+					ex.classList.add('exit');
+
+					document.querySelector(".timer_container").innerHTML = finalMessage;
+
+				}
+			}
+		}
+
+		function updateStatus(msg, speechMsg){
+			let sm = document.querySelector('#status_message');
+			sm.classList.remove('hidden');
+
+			if(msg)			sm.innerHTML = msg;
+			if(speechMsg)	window.speechSynthesis.speak(speechMsg);
+			
+		}
+
+
+		function promptClick(){
+			clickOnWord = true;
+			updateStatus(timesUpMessage, timesUpSSU);
+            document.querySelector('#text').classList.add('hover');
+		}
+
+		function resetTimer(){
+            started = false;
+            clearInterval(timerInterval);
+            clickOnWord = false;
+            document.querySelector('#text').classList.remove('hover');
+
+
+			var timer = defaultTime, minutes, seconds;
+			var display = document.querySelector('#time');
+			minutes = parseInt(timer / 60, 10);
+	        seconds = parseInt(timer % 60, 10);
+
+	        minutes = minutes < 10 ? "0" + minutes : minutes;
+	        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+	        display.textContent = minutes + ":" + seconds;
+		}
+
+
+
+		function startTimer(duration, display) {
+			window.speechSynthesis.cancel();
+			document.querySelector('#status_message').classList.add('hidden')
+		    var timer = duration, minutes, seconds;
+		    timerInterval = setInterval(function () {
+		        minutes = parseInt(timer / 60, 10);
+		        seconds = parseInt(timer % 60, 10);
+
+		        minutes = minutes < 10 ? "0" + minutes : minutes;
+		        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+		        display.textContent = minutes + ":" + seconds;
+
+		        if (--timer < 0) {
+		            // timer = duration;
+		            // resetTimer();
+                    clearInterval(timerInterval);
+		            promptClick();
+
+		        }
+		    }, 1000);
+		}
+
+		function doCountDown() {
+			if (! started){
+				started = true;
+			    var display = document.querySelector('#time');
+			    startTimer(defaultTime, display);
+			}
+		};
+
+		function ordinal(i) {
+		    var j = i % 10,
+		        k = i % 100;
+		    if (j == 1 && k != 11) {
+		        return i + "st";
+		    }
+		    if (j == 2 && k != 12) {
+		        return i + "nd";
+		    }
+		    if (j == 3 && k != 13) {
+		        return i + "rd";
+		    }
+		    return i + "th";
+		}
+
+	</script>
+
+</head>
+
+<body>
+
+
+	<div class="hidden fixed status_message" id="status_message"></div>
+	<div class="instructions" id="instructions"></div>
+
+	<div class="timer_container">
+
+
+		<div id="timer_title" class="timer_title"></div>
+		<div class="timer"><span id="time"></span></div>
+		<div class="timer_controls">
+			<span class="start_timer" onclick="doCountDown()">Start</span>
+			<span class="reset_timer" onclick="resetTimer()">Reset</span>
+		</div>
+
+	</div>
+
+
+	<div class="text" id="text"></div>
+	<div class="hidden" id="exit" onclick="exit()"></div>
+
+
+
+</body>
+</html>
